@@ -92,10 +92,27 @@ ux::Trie::save(const char* index_name)
 CODE:
     CHECK_RESULT(THIS->save(index_name));
 
+std::string
+ux::Trie::to_string()
+CODE:
+    std::ostringstream os;
+    CHECK_RESULT(THIS->save(os));
+    RETVAL = os.str();
+OUTPUT:
+    RETVAL
+
 void
 ux::Trie::load(const char* index_name)
 CODE:
     CHECK_RESULT(THIS->load(index_name));
+
+void
+ux::Trie::load_string(SV* string)
+CODE:
+    STRLEN len;
+    char* str = SvPVbyte(string, len);
+    std::istringstream is(std::string(str, len));
+    CHECK_RESULT(THIS->load(is));
 
 SV*
 ux::Trie::prefix_search(SV* query)
