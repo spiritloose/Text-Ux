@@ -54,7 +54,7 @@ Text::Ux - More Succinct Trie Data structure (binding for ux-trie)
 
 Text::Ux is a perl bindng for ux-trie.
 
-L<https://code.google.com/ux-trie/>
+L<https://code.google.com/p/ux-trie/>
 
 =head1 METHODS
 
