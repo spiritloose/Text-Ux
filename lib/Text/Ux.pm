@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use Exporter 'import';
 
-our $VERSION = "0.02";
+our $VERSION = "0.10";
 
 require XSLoader;
 XSLoader::load('Text::Ux', $VERSION);
