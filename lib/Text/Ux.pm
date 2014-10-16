@@ -30,13 +30,13 @@ Text::Ux - More Succinct Trie Data structure (binding for ux-trie)
   # build
   $ux->build([qw(foo bar baz)]);
   $ux->save('/path/to/index');
-  # to string
-  my $bytes = $ux->to_string;
+  # or save the dictionary into string
+  $ux->save(\my $dic);
 
   # search
   $ux->load('/path/to/index');
-  # from string
-  $ux->load_string($bytes);
+  # or pass string
+  $ux->load(\$dic);
   my $key = $ux->prefix_search('text');
   my @keys = $ux->common_prefix_search('text');
   my @keys = $ux->predictive_search('text');
@@ -66,13 +66,9 @@ Creates a new instance.
 
 =item $ux->build($keys, $is_tail_ux = TRUE)
 
-=item $ux->save($filename)
+=item $ux->save($filename_or_scalarref)
 
-=item $ux->load($filename)
-
-=item $str = $ux->to_string()
-
-=item $ux->load_string($str)
+=item $ux->load($filename_or_scalarref)
 
 =item $key = $ux->prefix_search($query)
 

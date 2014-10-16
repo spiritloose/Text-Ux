@@ -8,12 +8,12 @@ use File::Spec;
 
 my $ux = new_ok 'Text::Ux';
 $ux->build([qw(foo bar baz footprint)]);
-my $dic = $ux->to_string;
+$ux->save(\my $dic);
 ok $dic;
 undef $ux;
 
 my $ux2 = Text::Ux->new;
-$ux2->load_string($dic);
+$ux2->load(\$dic);
 is $ux2->size, 4;
 my $res = $ux2->prefix_search('foop');
 is $res, 'foo';
