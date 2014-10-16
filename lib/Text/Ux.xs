@@ -16,6 +16,7 @@ extern "C" {
 #undef do_close
 #endif
 
+#define NEED_sv_2pvbyte
 #define NEED_newCONSTSUB
 #define NEED_newRV_noinc
 #define NEED_newSVpvn_flags
@@ -88,14 +89,28 @@ CODE:
     THIS->build(keys, is_tail_ux);
 
 void
-ux::Trie::save(const char* index_name)
+ux::Trie::save(SV* stuff)
 CODE:
-    CHECK_RESULT(THIS->save(index_name));
+    if (SvROK(stuff) && strcmp(sv_reftype(SvRV(stuff), TRUE), "SCALAR") == 0) {
+        std::ostringstream os;
+        CHECK_RESULT(THIS->save(os));
+        std::string str = os.str();
+        sv_setpvn(SvRV(stuff), str.c_str(), str.length());
+    } else {
+        CHECK_RESULT(THIS->save(SvPV_nolen(stuff)));
+    }
 
 void
-ux::Trie::load(const char* index_name)
+ux::Trie::load(SV* stuff)
 CODE:
-    CHECK_RESULT(THIS->load(index_name));
+    if (SvROK(stuff) && strcmp(sv_reftype(SvRV(stuff), TRUE), "SCALAR") == 0) {
+        STRLEN len;
+        char* str = SvPVbyte(SvRV(stuff), len);
+        std::istringstream is(std::string(str, len));
+        CHECK_RESULT(THIS->load(is));
+    } else {
+        CHECK_RESULT(THIS->load(SvPV_nolen(stuff)));
+    }
 
 SV*
 ux::Trie::prefix_search(SV* query)

@@ -30,9 +30,13 @@ Text::Ux - More Succinct Trie Data structure (binding for ux-trie)
   # build
   $ux->build([qw(foo bar baz)]);
   $ux->save('/path/to/index');
+  # or save the dictionary into string
+  $ux->save(\my $dic);
 
   # search
   $ux->load('/path/to/index');
+  # or pass string
+  $ux->load(\$dic);
   my $key = $ux->prefix_search('text');
   my @keys = $ux->common_prefix_search('text');
   my @keys = $ux->predictive_search('text');
@@ -50,7 +54,7 @@ Text::Ux - More Succinct Trie Data structure (binding for ux-trie)
 
 Text::Ux is a perl bindng for ux-trie.
 
-L<https://code.google.com/ux-trie/>
+L<https://code.google.com/p/ux-trie/>
 
 =head1 METHODS
 
@@ -62,9 +66,9 @@ Creates a new instance.
 
 =item $ux->build($keys, $is_tail_ux = TRUE)
 
-=item $ux->save($filename)
+=item $ux->save($filename_or_scalarref)
 
-=item $ux->load($filename)
+=item $ux->load($filename_or_scalarref)
 
 =item $key = $ux->prefix_search($query)
 
