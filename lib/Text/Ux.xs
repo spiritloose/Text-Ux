@@ -9,6 +9,13 @@ extern "C" {
 }
 #endif
 
+// Hack to work around "error: declaration of 'Perl___notused' has a different
+// language linkage" error on Clang
+#ifdef dNOOP
+# undef dNOOP
+# define dNOOP
+#endif
+
 #ifdef do_open
 #undef do_open
 #endif
