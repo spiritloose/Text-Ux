@@ -122,7 +122,7 @@ CODE:
 SV*
 ux::Trie::prefix_search(SV* query)
 CODE:
-    if (!SvPOK(query)) {
+    if (!SvOK(query)) {
         XSRETURN_UNDEF;
     }
     STRLEN len;
@@ -140,7 +140,7 @@ OUTPUT:
 void
 ux::Trie::common_prefix_search(SV* query, size_t limit = ux::LIMIT_DEFAULT)
 PPCODE:
-    if (!SvPOK(query)) {
+    if (!SvOK(query)) {
         XSRETURN_EMPTY;
     }
     STRLEN len;
@@ -161,7 +161,7 @@ PPCODE:
 void
 ux::Trie::predictive_search(SV* query, size_t limit = ux::LIMIT_DEFAULT)
 PPCODE:
-    if (!SvPOK(query)) {
+    if (!SvOK(query)) {
         XSRETURN_EMPTY;
     }
     STRLEN len;
@@ -213,7 +213,7 @@ OUTPUT:
 SV*
 ux::Trie::gsub(SV* query, SV* callback)
 CODE:
-    if (!SvPOK(query)) {
+    if (!SvOK(query)) {
         XSRETURN_UNDEF;
     }
     if (!SvROK(callback) || SvTYPE(SvRV(callback)) != SVt_PVCV) {

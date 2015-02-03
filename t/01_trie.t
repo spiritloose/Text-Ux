@@ -7,14 +7,17 @@ use File::Temp;
 use File::Spec;
 
 my $ux = new_ok 'Text::Ux';
-$ux->build([qw(foo bar baz footprint)]);
+$ux->build([qw(foo bar baz footprint 123)]);
 ok $ux->alloc_size;
-is $ux->size, 4;
+is $ux->size, 5;
 ok $ux->alloc_stat(1);
 ok $ux->stat;
 
 my $res = $ux->prefix_search('foop');
 is $res, 'foo';
+
+$res = $ux->prefix_search(1234);
+is $res, 123;
 
 my @res = $ux->common_prefix_search('footprint');
 is_deeply \@res, ['foo', 'footprint'];
@@ -29,7 +32,7 @@ my $i;
 for ($i = 0; $i < $ux->size; $i++) {
     ok $ux->decode_key($i);
 }
-is $i, 4;
+is $i, 5;
 ok !$ux->decode_key($i);
 
 my $dir = File::Temp->newdir;
@@ -39,7 +42,7 @@ ok -f $file;
 
 my $ux2 = Text::Ux->new;
 $ux2->load($file);
-is $ux->size, 4;
+is $ux->size, 5;
 
 $ux2->clear;
 is $ux2->size, 0;
