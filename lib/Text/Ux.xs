@@ -137,6 +137,23 @@ CODE:
 OUTPUT:
     RETVAL
 
+ux::id_t
+ux::Trie::prefix_search_id(SV* query)
+CODE:
+    if (!SvOK(query)) {
+        XSRETURN_UNDEF;
+    }
+    STRLEN len;
+    char* str = SvPV(query, len);
+    size_t ret_len;
+    ux::id_t id = THIS->prefixSearch(str, len, ret_len);
+    if (id == ux::NOTFOUND) {
+        XSRETURN_UNDEF;
+    }
+    RETVAL = id;
+OUTPUT:
+    RETVAL
+
 void
 ux::Trie::common_prefix_search(SV* query, size_t limit = ux::LIMIT_DEFAULT)
 PPCODE:

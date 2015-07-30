@@ -16,6 +16,9 @@ ok $ux->stat;
 my $res = $ux->prefix_search('foop');
 is $res, 'foo';
 
+$res = $ux->prefix_search_id('foop');
+is $res, 3;
+
 $res = $ux->prefix_search(1234);
 is $res, 123;
 
